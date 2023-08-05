@@ -1,0 +1,97 @@
+.back
+{
+    background: rgba(191, 191, 191, 0.58);
+    backdrop-filter: blur(5px);
+    width: 100%-15px;
+    height: 75vh;
+    border-radius: 32px;
+    margin: 15px;
+    overflow-x: auto; /* Enable horizontal scrolling if table overflows */
+    display: flex;
+    justify-content: center;
+    
+}
+
+  
+  .table1 {
+    margin: 15px;
+    width: 95%; 
+    border-collapse: collapse;
+    text-align: center;
+    
+  }
+  
+  
+  .table1 td, .table1 th {
+    padding: 8px; 
+    border: 1px solid #ccc; 
+    font-size: 20px;
+  }
+  
+
+ .back::-webkit-scrollbar {
+    width: 12px;               /* width of the entire scrollbar */
+  }
+  
+  .back::-webkit-scrollbar-track {
+    background: orange;        /* color of the tracking area */
+  }
+  
+  .back::-webkit-scrollbar-thumb {
+    background-color: blue;    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    border: 3px solid orange;  /* creates padding around scroll thumb */
+  }
+
+.table2
+{
+    margin: 15px;
+    width: 95%; 
+    border-collapse: collapse;
+    text-align: center;
+    
+
+}
+.table2 td {
+  padding: 8px; 
+  border: 1px solid #ccc; 
+  font-size: 20px;
+  width: 500px;
+  background-color: aliceblue;
+  color: blue;
+}
+
+.table2 th
+{
+  padding: 8px; 
+  border: 1px solid #ccc; 
+  font-size: 20px;
+  width: 500px;
+  background-color: blue;
+  color: aliceblue;
+}
+
+.pointtable
+{
+  display: flex;
+}
+
+.choice
+{
+  display: flex;
+  flex-direction: row;
+  margin: 15px;
+
+  
+
+}
+.playerchoice
+{
+  flex: 1;
+  text-align: center;
+}
+.computerchoice
+{
+  flex: 1;
+  text-align: center;
+}
