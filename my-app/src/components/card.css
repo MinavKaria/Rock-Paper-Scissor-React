@@ -1,0 +1,25 @@
+.card1 {
+    width: 150px;
+    height: 200px;
+    background-color: yellow;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    border-radius: 32px;
+    border: 2px solid blue;
+
+}
+.card1-container
+{
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+
+    
+}
+.text
+{
+    text-transform: uppercase;
+}

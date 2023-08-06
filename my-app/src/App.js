@@ -10,6 +10,7 @@ import React, { useState } from 'react';
 
 
 
+
 const Leaderboard1 = () => (
  <Leaderboard></Leaderboard>
 );
@@ -48,6 +49,8 @@ const Game1 = () => (
     </nav>
     {currentPage === 'home' && <Game1 />}
     {currentPage === 'leaderboard' && <Leaderboard1 />}
+
+
     
   
     

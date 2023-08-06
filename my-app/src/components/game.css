@@ -89,9 +89,46 @@
 {
   flex: 1;
   text-align: center;
+ 
 }
 .computerchoice
 {
   flex: 1;
   text-align: center;
+  
+}
+
+.finalscore
+{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  
+
+}
+
+.buttons
+{
+  display: flex;
+  justify-content: center;
+}
+.roundresult
+{
+  display: flex;
+  justify-content: center;
+}
+.finalresult
+{
+  display: flex;
+  justify-content: center;
+}
+.startagain
+{
+  display: flex;
+  justify-content: center;
+}
+.scores
+{
+  display: flex;
+  justify-content: center;
 }
