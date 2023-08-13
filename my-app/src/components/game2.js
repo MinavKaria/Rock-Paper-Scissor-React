@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
 import './game.css';
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { initializeApp} from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import {getAuth} from 'firebase/auth';
+
 import Card from './card';
 import { getFirestore, collection, addDoc } from "firebase/firestore";
+import Icon from './icon';
+import firebase from "firebase/app";
+
+import 'firebase/database'; 
+import { getDatabase, ref, set } from "firebase/database";
+
+
+
+
+
 
 
 const firebaseConfig = {
@@ -21,9 +30,11 @@ const firebaseConfig = {
 
 
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const app1 = initializeApp(firebaseConfig);
+const db = getDatabase(app1);
 
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 const choices = ['rock', 'paper', 'scissors'];
 
 
@@ -66,15 +77,21 @@ const RPSGame = () => {
     const result = determineWinner(choice, computerChoice);
     setResult(result);
   };
-  
+
+
+
+
   const handleRestart = async() => {
+
     setPlayerScore(0);
     setComputerScore(0);
     setPlayerChoice('');
     setComputerChoice('');
     setResult('');
-
-    try {
+    
+    
+    try 
+    {
       const gameData = {
         playerName,
         playerScore,
@@ -86,9 +103,14 @@ const RPSGame = () => {
       const docRef = await addDoc(collection(db, "gameResults"), gameData);
       console.log("Game result added with ID: ", docRef.id);
     } 
-    catch (error) {
+
+    
+    catch (error) 
+    {
       console.log("Error adding game result: ", error);
     }
+
+    
   };
   
   return (
@@ -151,7 +173,7 @@ const RPSGame = () => {
             <h1>{computerScore}</h1>
             </div>
             <div className='startagain'>
-            <button onClick={handleRestart} >Start Again</button>
+            <button className='btn btn-danger' onClick={handleRestart} >Start Again</button>
             </div>
           
 
@@ -163,7 +185,7 @@ const RPSGame = () => {
         ) :
          (
           <div className='buttons'>
-            {choices.map(choice => (<button key={choice} onClick={() => handlePlayerChoice(choice)}>{choice}</button>))}
+            {choices.map(choice => (<button className="btn btn-danger" key={choice} onClick={() => handlePlayerChoice(choice)}>{choice}</button>))}
           </div>
         )}
       </div>
