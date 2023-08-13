@@ -5,6 +5,8 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import {getAuth} from 'firebase/auth';
 import Card from './card';
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyArARFQe9OlVd4F0oyjY-EPUUO38sesUac",
@@ -19,24 +21,17 @@ const firebaseConfig = {
 
 
 
-
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 const choices = ['rock', 'paper', 'scissors'];
 
 
 const RPSGame = () => {
 
-  const[user,setUser]= useState({
-    name:'',
-    score:"",
-    result:'',
-    time:'12:00',
-  }
+ 
 
-
-  
-  );
-
+  const [playerName, setPlayerName] = useState('');
   const [playerScore, setPlayerScore] = useState(0);
   const [computerScore, setComputerScore] = useState(0);
   const [playerChoice, setPlayerChoice] = useState('');
@@ -72,12 +67,28 @@ const RPSGame = () => {
     setResult(result);
   };
   
-  const handleRestart = () => {
+  const handleRestart = async() => {
     setPlayerScore(0);
     setComputerScore(0);
     setPlayerChoice('');
     setComputerChoice('');
     setResult('');
+
+    try {
+      const gameData = {
+        playerName,
+        playerScore,
+        computerScore,
+        result,
+        timestamp: new Date().toISOString(),
+      };
+  
+      const docRef = await addDoc(collection(db, "gameResults"), gameData);
+      console.log("Game result added with ID: ", docRef.id);
+    } 
+    catch (error) {
+      console.log("Error adding game result: ", error);
+    }
   };
   
   return (
@@ -119,7 +130,17 @@ const RPSGame = () => {
         {playerScore === 5 || computerScore === 5 ?
          (
           <div className='finalscore'>
-            
+
+            <div className='name'>
+              <input
+                type="text"
+                placeholder="Enter your name"
+                value={playerName}
+                onChange={(e) => setPlayerName(e.target.value)}
+              />
+            </div>
+
+
             <div>
             <h2 className='finalresult'>{playerScore === 5 ? 'Player' : 'Computer'} wins!</h2>
             </div>
