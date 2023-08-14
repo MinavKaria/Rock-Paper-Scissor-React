@@ -1,13 +1,13 @@
- export default function Icon({name1})
+ export default function Icon(name1)
  {
-    if({name1}==='rock')
+    if(name1==='Rock')
     return(
 
         <p>🪨</p>
 
         );
 
-    else if({name1}==='paper')
+    else if(name1==='paper')
     return(
 
        

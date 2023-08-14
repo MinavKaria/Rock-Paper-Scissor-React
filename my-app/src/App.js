@@ -44,7 +44,7 @@ const Game1 = () => (
 
     <nav className='navigate'>
       <button className='btn1 third' onClick={() => handleNavigation('home')}>Play Game</button>
-      <button className='btn1 third' onClick={() => handleNavigation('leaderboard')}>Check Leaderboard</button>
+      <button className='btn1 third' onClick={() => handleNavigation('leaderboard')}>Check Scoreboard</button>
       
     </nav>
     {currentPage === 'home' && <Game1 />}

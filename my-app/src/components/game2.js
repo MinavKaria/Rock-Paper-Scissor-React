@@ -7,15 +7,8 @@ import Card from './card';
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import Icon from './icon';
 import firebase from "firebase/app";
-
 import 'firebase/database'; 
-import { getDatabase, ref, set } from "firebase/database";
-
-
-
-
-
-
+import { db } from './firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyArARFQe9OlVd4F0oyjY-EPUUO38sesUac",
@@ -30,25 +23,28 @@ const firebaseConfig = {
 
 
 
-const app1 = initializeApp(firebaseConfig);
-const db = getDatabase(app1);
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const choices = ['rock', 'paper', 'scissors'];
+const choices = ['Rock', 'Paper', 'Scissors'];
 
 
 const RPSGame = () => {
 
- 
-
-  const [playerName, setPlayerName] = useState('');
+  const [playerName, setPlayerName] = useState();
   const [playerScore, setPlayerScore] = useState(0);
   const [computerScore, setComputerScore] = useState(0);
   const [playerChoice, setPlayerChoice] = useState('');
   const [computerChoice, setComputerChoice] = useState('');
   const [result, setResult] = useState('');
   
+  const [gameData, setGameData] = useState({
+    playerName: '',
+    playerScore: 0,
+    computerScore: 0,
+    result: '',
+    timestamp: '',
+  });
+
   const getRandomChoice = () => {
 
     const randomIndex = Math.floor(Math.random() * choices.length);
@@ -58,7 +54,7 @@ const RPSGame = () => {
   const determineWinner = (player, computer) => {
 
     if (player === computer) return 'It\'s a tie!';
-    if ((player === 'rock' && computer === 'scissors') ||(player === 'scissors' && computer === 'paper') ||(player === 'paper' && computer === 'rock')) 
+    if ((player === 'Rock' && computer === 'Scissors') ||(player === 'Scissors' && computer === 'Paper') ||(player === 'Paper' && computer === 'Rock')) 
         {
             setPlayerScore(prevScore => prevScore + 1);
             return 'Player wins!';
@@ -70,49 +66,66 @@ const RPSGame = () => {
     }
   };
   
-  const handlePlayerChoice = (choice) => {
+  const handlePlayerChoice = async (choice) => {
     const computerChoice = getRandomChoice();
     setPlayerChoice(choice);
     setComputerChoice(computerChoice);
-    const result = determineWinner(choice, computerChoice);
+    const result = await determineWinner(choice, computerChoice);
     setResult(result);
-  };
-
-
-
-
-  const handleRestart = async() => {
-
-    setPlayerScore(0);
-    setComputerScore(0);
-    setPlayerChoice('');
-    setComputerChoice('');
-    setResult('');
-    
-    
-    try 
-    {
-      const gameData = {
+  
+    if (playerScore === 5 || computerScore === 5) {
+      // Add the game result to the database
+      const Data = {
         playerName,
         playerScore,
         computerScore,
         result,
         timestamp: new Date().toISOString(),
       };
-  
-      const docRef = await addDoc(collection(db, "gameResults"), gameData);
-      console.log("Game result added with ID: ", docRef.id);
-    } 
-
-    
-    catch (error) 
-    {
-      console.log("Error adding game result: ", error);
+      setGameData(Data);
+      await uploadDB();
     }
+  };
 
-    
+  const uploadDB = async ()=> { 
+    console.log(gameData);
+        try {
+            const docRef = await addDoc(collection(db, "gameResults"), {
+              playerName: gameData.playerName,    
+              playerScore: gameData.playerScore,
+              computerScore: gameData.computerScore,
+              result: gameData.result,
+              timestamp: gameData.timestamp
+            });
+            console.log("Document written with ID: ", docRef.id);
+          } 
+          catch (e) {
+            console.error("Error adding document: ", e);
+          }
+  }
+  const handleRestart = () => {
+
+    setPlayerScore(0);
+    setComputerScore(0);
+    setPlayerChoice('');
+    setComputerChoice('');
+    setResult('');
+    setPlayerName('');
   };
   
+  const setName = (e) => {
+    setPlayerName(e.target.value);
+    const Data = {
+      playerName,
+      playerScore,
+      computerScore,
+      result,
+      timestamp: new Date().toISOString(),
+    };
+    setGameData(Data);
+  }
+ 
+
   return (
     <div>
       <div>
@@ -152,13 +165,16 @@ const RPSGame = () => {
         {playerScore === 5 || computerScore === 5 ?
          (
           <div className='finalscore'>
-
-            <div className='name'>
+            <div className='name mb-2 b'>
+              Enter the Space in the name and Click Start Again
+            </div>
+            <div className='name m-3'>
               <input
                 type="text"
-                placeholder="Enter your name"
+                placeholder="Enter your name (Click Start Again)"
                 value={playerName}
-                onChange={(e) => setPlayerName(e.target.value)}
+                onChange={setName}
+                className='w-25'
               />
             </div>
 
@@ -173,22 +189,26 @@ const RPSGame = () => {
             <h1>{computerScore}</h1>
             </div>
             <div className='startagain'>
-            <button className='btn btn-danger' onClick={handleRestart} >Start Again</button>
+            <button className='btn btn-danger' onClick={()=>{
+              handleRestart()
+            uploadDB()
+          }} >Start Again</button>
             </div>
           
 
           </div>
-        
-          
-          
-
         ) :
          (
           <div className='buttons'>
             {choices.map(choice => (<button className="btn btn-danger" key={choice} onClick={() => handlePlayerChoice(choice)}>{choice}</button>))}
+            
           </div>
+           
+           
+         
         )}
       </div>
+     
     </div>
   );
 };
