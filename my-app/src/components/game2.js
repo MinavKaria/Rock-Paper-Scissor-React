@@ -116,14 +116,22 @@ const RPSGame = () => {
   const setName = (e) => {
     setPlayerName(e.target.value);
     const Data = {
-      playerName,
+      playerName:e.target.value,
       playerScore,
       computerScore,
       result,
       timestamp: new Date().toISOString(),
+
+      
     };
     setGameData(Data);
+    console.log(e.target.value);
+    
   }
+
+
+
+  
  
 
   return (
@@ -165,9 +173,6 @@ const RPSGame = () => {
         {playerScore === 5 || computerScore === 5 ?
          (
           <div className='finalscore'>
-            <div className='name mb-2 b'>
-              Enter the Space in the name and Click Start Again
-            </div>
             <div className='name m-3'>
               <input
                 type="text"
@@ -189,9 +194,22 @@ const RPSGame = () => {
             <h1>{computerScore}</h1>
             </div>
             <div className='startagain'>
+
             <button className='btn btn-danger' onClick={()=>{
-              handleRestart()
+              
+            
+             const Data = {
+              playerName,
+              playerScore,
+              computerScore,
+              result,
+              timestamp: new Date().toISOString(),
+
+              
+            };
+            setGameData(Data);
             uploadDB()
+            handleRestart()
           }} >Start Again</button>
             </div>
           
