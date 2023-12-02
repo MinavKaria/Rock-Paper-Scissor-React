@@ -1,30 +1,12 @@
 import React, { useState } from 'react';
 import './game.css';
 import { initializeApp} from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 
 import Card from './card';
 import { getFirestore, collection, addDoc } from "firebase/firestore";
-import Icon from './icon';
-import firebase from "firebase/app";
 import 'firebase/database'; 
-import { db } from './firestore';
+import { db } from './firestore.js';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyArARFQe9OlVd4F0oyjY-EPUUO38sesUac",
-  authDomain: "rock-paper-scissor-171cc.firebaseapp.com",
-  databaseURL: "https://rock-paper-scissor-171cc-default-rtdb.firebaseio.com",
-  projectId: "rock-paper-scissor-171cc",
-  storageBucket: "rock-paper-scissor-171cc.appspot.com",
-  messagingSenderId: "155558235436",
-  appId: "1:155558235436:web:d132d18e80a1c77a1d3089",
-  measurementId: "G-B1ZGGF0DZT"
-};
-
-
-
-
-const app = initializeApp(firebaseConfig);
 const choices = ['Rock', 'Paper', 'Scissors'];
 
 
@@ -90,7 +72,7 @@ const RPSGame = () => {
   const uploadDB = async ()=> { 
     console.log(gameData);
         try {
-            const docRef = await addDoc(collection(db, "gameResults"), {
+            const docRef = await addDoc(collection(db, "MyResults"), {
               playerName: gameData.playerName,    
               playerScore: gameData.playerScore,
               computerScore: gameData.computerScore,

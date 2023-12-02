@@ -1,19 +1,24 @@
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "AIzaSyArARFQe9OlVd4F0oyjY-EPUUO38sesUac",
-    authDomain: "rock-paper-scissor-171cc.firebaseapp.com",
-    databaseURL: "https://rock-paper-scissor-171cc-default-rtdb.firebaseio.com",
-    projectId: "rock-paper-scissor-171cc",
-    storageBucket: "rock-paper-scissor-171cc.appspot.com",
-    messagingSenderId: "155558235436",
-    appId: "1:155558235436:web:d132d18e80a1c77a1d3089",
-    measurementId: "G-B1ZGGF0DZT"
-  };
+  apiKey: "AIzaSyBkvOi_UoxNRtBKc-a6TxoRacR6XTXsGVo",
+  authDomain: "alien-iterator-404714.firebaseapp.com",
+  projectId: "alien-iterator-404714",
+  storageBucket: "alien-iterator-404714.appspot.com",
+  messagingSenderId: "258171629964",
+  appId: "1:258171629964:web:3f0ce2ccdf01361c2fa6a9",
+  measurementId: "G-TB678ZPNTK"
+};
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-// Export firestore database
-// It will be imported into your react app whenever it is needed
-export const db = getFirestore(app);
+const db = getFirestore(app);
+
+export { db };
+
