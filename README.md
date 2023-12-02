@@ -9,5 +9,4 @@ https://rock-paper-scissor-171cc.web.app/
 # Scoreboard
 ![image](https://github.com/MinavKaria/Rock-Paper-Scissor-React/assets/119132631/097121ee-f2df-48da-b533-f57baa441328)
 
-Scoreboard down due to firebase limited days access.
 
